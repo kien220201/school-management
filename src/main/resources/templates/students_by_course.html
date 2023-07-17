@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Students by Course</title>
+  <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Students by Course</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Student ID</th>
+    <th>Student Name</th>
+    <th>Student Age</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- Loop through students and display student information -->
+  <tr th:each="student : ${students}">
+    <td th:text="${student.id}"></td>
+    <td th:text="${student.name}"></td>
+    <td th:text="${student.age}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

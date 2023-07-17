@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Registered Courses</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Registered Courses</h1>
+
+<h2>Học sinh: <span th:text="${student.name}"></span></h2>
+
+<h3>Danh sách khóa học đã đăng ký:</h3>
+<form>
+  <ul>
+    <li th:each="course : ${registeredCourses}">
+      <span th:text="${course.name}"></span> - <span th:text="${course.description}"></span>
+      <input type="hidden" name="courseIds" th:value="${course.id}">
+    </li>
+  </ul>
+</form>
+
+<h3>Danh sách khóa học khả dụng:</h3>
+<ul>
+  <li th:each="course : ${availableCourses}">
+    <span th:text="${course.name}"></span> - <span th:text="${course.description}"></span>
+    <form th:action="@{/students/{studentId}/register/{courseId}(studentId=${student.id}, courseId=${course.id})}" method="post">
+      <input type="submit" value="Đăng ký">
+    </form>
+  </li>
+</ul>
+
+</body>
+</html>

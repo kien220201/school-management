@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Registered Courses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function registerCourse(studentId, courseId) {
+        console.log('lll')
+            $.ajax({
+                url: '/students/' + studentId + '/registerCourse/' + courseId,
+                type: 'POST',
+                success: function() {
+                    // Refresh the page to update the registered courses list
+                    location.reload();
+                },
+                error: function() {
+                    console.log('Error occurred while registering the course.');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<h1>Registered Courses</h1>
+
+<h2>Học sinh: <span th:text="${student.name}"></span></h2>
+
+<h3>Danh sách khóa học đã đăng ký:</h3>
+<ul id="registeredCoursesList">
+    <li th:each="registeredCourse : ${student.courses}">
+        <span th:text="${registeredCourse.name}"></span> - <span th:text="${registeredCourse.description}"></span>
+    </li>
+</ul>
+
+<h3>Danh sách khóa học khả dụng:</h3>
+<ul>
+    <li th:each="course : ${availableCourses}">
+        <span th:text="${course.name}"></span> - <span th:text="${course.description}"></span>
+        <form onsubmit="registerCourse(${student.id}, ${course.id}); return false;">
+            <input type="submit" value="Đăng ký">
+        </form>
+    </li>
+</ul>
+
+</body>
+</html>
